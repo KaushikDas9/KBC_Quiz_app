@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kbc_quiz_app/Services/firedb.dart';
 
 class Google_auth {
  FirebaseAuth _auth = FirebaseAuth.instance ;
@@ -15,7 +16,9 @@ class Google_auth {
       User? user = await userCredential.user;
       assert(!user!.isAnonymous);
       assert(user?.getIdToken() != null );
-
+      
+      // add User details in fireStore 
+      firedb().createNewUser(user!.displayName.toString(),user.email.toString() , user.photoURL.toString(), user.uid.toString());
     return user ; 
     }
 }
