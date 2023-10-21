@@ -12,14 +12,14 @@ class firedb {
       user = value.data().toString()
   });
   
-  return user == "null" ? true  : false ;
+  return user == "null" ?  false : true ;
 }
 
 
   Future<void> createNewUser(String name , String email , String PhotoUrl , String uid) async { 
     final FirebaseAuth _auth = await FirebaseAuth.instance;
     User? curentUser =   _auth.currentUser;
-   if(  await getUser() == true ){
+   if(  await getUser() == false ){
     FirebaseFirestore.instance.collection("Users").doc(curentUser!.uid).set(
       {
         "Name": name.toString(),
@@ -28,9 +28,7 @@ class firedb {
         "uid" : uid.toString(),
         "Money" : 50000 
       }
-    );}else { debugPrint("Thik thak Kaj Korche");}
-
-    
+    );}
 
   }  
  
