@@ -12,7 +12,8 @@ class firedb {
         "Name": name.toString(),
         "Email" : email.toString(),
         "Photo" : PhotoUrl.toString(),
-        "uid" : uid.toString()
+        "uid" : uid.toString(),
+        "Money" : 50000 
       }
     );
 
