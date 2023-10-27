@@ -16,6 +16,7 @@ class _LostScreenState extends State<LostScreen> {
     return Scaffold(
       body: Stack(children: [
          
+         
         Container(
           width: width,
           child: Image.asset(
@@ -23,6 +24,10 @@ class _LostScreenState extends State<LostScreen> {
             fit: BoxFit.cover,
           ),
         ), 
+        Padding(
+          padding:  EdgeInsets.symmetric(horizontal: width * .05, vertical: height * .01),
+          child: Align( alignment: Alignment.bottomRight , child: ElevatedButton(onPressed: (){} , child: Text("Retry"))),
+        ),
         Container(
             width: width,
             child: Column(
@@ -50,12 +55,7 @@ class _LostScreenState extends State<LostScreen> {
                   "RS:5,04,000 ",
                   style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
-                Container(
-                    padding: EdgeInsets.only(top: height * .04),
-                    width: width * .9,
-                    child: Image.asset(
-                      "assets/image/State bank cheque.webp",
-                    )),
+                ElevatedButton(onPressed: () {} , child: Text("Go to Rewards")),
                     
               ],
             ))
