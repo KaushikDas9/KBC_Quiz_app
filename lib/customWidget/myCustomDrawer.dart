@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kbc_quiz_app/Screen/ProfileScreenPage.dart';
 
 class customdrawer extends StatefulWidget {
   const customdrawer({super.key});
@@ -22,7 +23,7 @@ class _customdrawerState extends State<customdrawer> {
           padding: const EdgeInsets.only(left: 15 ,  top: 25),
           child: Column( mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.start,
-              children: [ CircleAvatar(), SizedBox( width: width*.05,) , Column( mainAxisAlignment: MainAxisAlignment.center ,children: [
+              children: [ InkWell(onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),)) ;} ,child: CircleAvatar()), SizedBox( width: width*.05,) , Column( mainAxisAlignment: MainAxisAlignment.center ,children: [
                 Text("KAUSHIK DAS" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
                 Text("Rs : 50000")
               ],) ],
