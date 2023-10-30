@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kbc_quiz_app/Screen/ProfileScreenPage.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kbc_quiz_app/Screen/login.dart';
+import 'package:kbc_quiz_app/Services/localdb.dart';
 class customdrawer extends StatefulWidget {
   const customdrawer({super.key});
 
@@ -10,12 +13,39 @@ class customdrawer extends StatefulWidget {
 }
 
 class _customdrawerState extends State<customdrawer> {
+
+  String? userName ; String? userPhotoId ;
+
+   Future getuserDetailsFromLocalDb() async { 
+
+    await Localdb().getUserName().then((value) {
+      print("jdnsbjfg");
+       userName = value ;
+     },);
+    await Localdb().getUserPhotoUrl().then((value) {
+       userPhotoId = value ;
+     },);
+
+   setState(() {
+  
+   });
+ }
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(userName == null && userPhotoId == null ){
+      print("Call holo");
+    getuserDetailsFromLocalDb();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
    
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
     return Drawer(
         child: Container(
       child: SafeArea(
@@ -23,8 +53,11 @@ class _customdrawerState extends State<customdrawer> {
           padding: const EdgeInsets.only(left: 15 ,  top: 25),
           child: Column( mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.start,
-              children: [ InkWell(onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),)) ;} ,child: CircleAvatar()), SizedBox( width: width*.05,) , Column( mainAxisAlignment: MainAxisAlignment.center ,children: [
-                Text("KAUSHIK DAS" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
+              children: [ InkWell(onTap: (){ 
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userProfilePic: userPhotoId.toString()),)) ;
+                } ,
+                child: CircleAvatar( backgroundImage: NetworkImage(userPhotoId.toString()),)), SizedBox( width: width*.05,) , Column( mainAxisAlignment: MainAxisAlignment.center ,children: [
+                Text( userName.toString() , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
                 Text("Rs : 50000")
               ],) ],
             ) ,
@@ -49,9 +82,29 @@ class _customdrawerState extends State<customdrawer> {
               padding: const EdgeInsets.only(top: 30),
               child: Row(children: [Icon(Icons.face) ,SizedBox( width: width*.05,) , Text("ABOUT US") ]),
             ),
+            InkWell(
+              onTap: () { 
+                 logout(); 
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Row(children: [Icon(Icons.logout_rounded) ,SizedBox( width: width*.05,) , Text("Log Out") ]),
+              ),
+            ),
           ]),
         ),
       ),
     ));
   }
+
+  Future<void> logout () async { 
+    FirebaseAuth _auth =   FirebaseAuth.instance ;
+    await _auth.signOut().then( (value) {
+      Localdb().saveUserId(null.toString(),null.toString(),null.toString() );
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Login(),), (route) => false);
+    }, );
+    
+  }
+
+
 }

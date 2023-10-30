@@ -21,7 +21,8 @@ class Google_auth {
       
       // add User details in fireStore 
       firedb().createNewUser(context,user!.displayName.toString(),user.email.toString() , user.photoURL.toString(), user.uid.toString());
-      Localdb().saveUserId(user.uid.toString());
+      Localdb().saveUserId(user.uid.toString() , user.photoURL.toString(),user.displayName.toString() );
+
     return user ; 
     }
 }

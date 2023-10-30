@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:kbc_quiz_app/Screen/home.dart';
 
 class firedb { 
-
  static Future<bool> getUser() async { 
   final FirebaseAuth _auth = await FirebaseAuth.instance;
     User? curentUser =   _auth.currentUser;

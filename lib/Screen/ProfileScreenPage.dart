@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:kbc_quiz_app/customWidget/ProfilePageLeaderBoard.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  String? userProfilePic ;
+   ProfilePage({required this.userProfilePic });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -47,8 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: height * .14,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(80),
-                          child: Image.asset(
-                              "assets/image/Kaun_Banega_Crorepati_logo.webp"),
+                          child: Image.network(widget.userProfilePic.toString()) ,
                         ),
                       ),
                       Positioned(
